@@ -32,7 +32,7 @@ public class Board extends JFrame implements MouseListener, KeyListener{
 	private static final int widthGameBoard = 500;
 	private static final int wCharacter = 50;
 	private static final int wHint = 30;
-	private static int DEPTH = 5;
+	private static int DEPTH = 6;
 	
 	public static final boolean ALLY = true;
 	public static final boolean ENEMY = false;
@@ -203,7 +203,7 @@ public class Board extends JFrame implements MouseListener, KeyListener{
 		for(Character ally : allys){
 			scores += e.hoaChanh(ally);
 		}
-		scores += 40*(-allys.size() + enemys.size());
+		scores += -40*(-allys.size() + enemys.size());
 		
 		for(Character enemy : enemys){
 			scores -= e.hoaChanh(enemy);
@@ -216,7 +216,7 @@ public class Board extends JFrame implements MouseListener, KeyListener{
 	public int minimax(int alpha, int beta, boolean turn, int depth, ArrayList<Character> allys, ArrayList<Character> enemys){
 		
 		if(alpha >= beta){
-			return turn == ALLY ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+			return turn != ALLY ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 		}
 		
 		if(gameOver(allys, enemys)){
@@ -229,11 +229,11 @@ public class Board extends JFrame implements MouseListener, KeyListener{
 		}
 		
 		if(depth == DEPTH){
-			if(turn == ALLY){
-				return est(allys, enemys) - depth;
+			if(turn != ALLY){
+				return est(enemys, allys);
 			}
 			else{
-				return est(allys, enemys) + depth;
+				return est(enemys, allys);
 			}
 		}
 		if(depth == 0) bestMoves.clear();
@@ -312,14 +312,14 @@ public class Board extends JFrame implements MouseListener, KeyListener{
 	private BestMove bestMove(ArrayList<BestMove> bestMoves){
 		BestMove bestMove = bestMoves.get(0);
 		
-		System.out.println("************");
+//		System.out.println("************");
 		for(BestMove bm : bestMoves){
-			System.out.println("last coordinate: " + bm.getCharacter().getCoordinate().getX() + " : " + bm.getCharacter().getCoordinate().getY() +" --- hint: " + bm.getCoordinate().getX() + " : " + bm.getCoordinate().getY() +" --- scores: " + bm.getScores());
+//			System.out.println("last coordinate: " + bm.getCharacter().getCoordinate().getX() + " : " + bm.getCharacter().getCoordinate().getY() +" --- hint: " + bm.getCoordinate().getX() + " : " + bm.getCoordinate().getY() +" --- scores: " + bm.getScores());
 			if(bm.getScores() > bestMove.getScores()){
 				bestMove = bm;
 			}
 		}
-		System.out.println("************");
+//		System.out.println("************");
 		
 		return bestMove;
 	}
@@ -360,7 +360,7 @@ public class Board extends JFrame implements MouseListener, KeyListener{
 	private void checkCharacterEnclosed(ArrayList<Character> allys, ArrayList<Character> enemys){
 		for(int i = 0; i < allys.size(); i++){
 			if(characterHandler.enclosed(allys.get(i), enemys)){
-				System.out.println("quan bi vay");
+//				System.out.println("quan bi vay");
 				allys.remove(allys.get(i));
 			}
 		}
@@ -368,11 +368,11 @@ public class Board extends JFrame implements MouseListener, KeyListener{
 	
 	private boolean gameOver(ArrayList<Character> allys, ArrayList<Character> enemys){
 		if(kingDead(allys, enemys)){
-			System.out.println("king dead *******************************");
+//			System.out.println("king dead *******************************");
 			return true;
 		}
 		if(kingIsEnclosed(allys, enemys)){
-			System.out.println("*************king enclosed");
+//			System.out.println("*************king enclosed");
 			return true;
 		}
 		if(charactersIsEnclosed(allys, enemys)) return true;

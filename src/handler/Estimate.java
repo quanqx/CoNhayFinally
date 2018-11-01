@@ -18,11 +18,11 @@ public class Estimate {
 		ArrayList<Coordinate> movable = HintHandler.getMovable(character);
 		if(movable.size() == 8){
 			if(character.getCoordinate().getX() == 2 && character.getCoordinate().getY() == 2){
-				System.out.println("hoa chanh chinh");
+//				System.out.println("hoa chanh chinh");
 				return 10;
 			}
 			else{
-				System.out.println("Hoa chanh phu");
+//				System.out.println("Hoa chanh phu");
 				return 5;
 			}
 		}
@@ -40,7 +40,7 @@ public class Estimate {
 						for(Character enemy : enemys){
 							if(ally.getCoordinate().getX() - character.getCoordinate().getX() == character.getCoordinate().getX() - enemy.getCoordinate().getX()
 									&& ally.getCoordinate().getY() - character.getCoordinate().getY() == character.getCoordinate().getY() - enemy.getCoordinate().getY()){
-								System.out.println("quan dong minh di vao giua tuong va quan dich");
+//								System.out.println("quan dong minh di vao giua tuong va quan dich");
 								return 10;
 							}
 						}
